@@ -1,0 +1,10 @@
+<resources>
+
+    <string name="app_name">ShowCarros</string>
+    <string name="txt_welcome_to_showcarros">WELCOME TO ShowCarros!</string>
+    <string name="txt_not_fund">Not found text</string>
+    <string name="txt_acerca_de">Acerca de...</string>
+    <string name="txt_about_app">ShowCarros es una app desarrollada en Santo Domingo, República Dominicana, por estudiantes del Diplomado de Desarrollo Móvil en Android, auspiciado por Mescyt e impartido en la Universidad Autónoma de Santo Domingo (UASD). [Nov, 2019] \n\n- Yander Sánchez \n- Michael Ceballos Paulino \n- Francesco Junior Caraballo \n- Branyes Nuñez</string>
+    <string name="txt_marca_vehiculo">Marca vehiculo</string>
+
+</resources>

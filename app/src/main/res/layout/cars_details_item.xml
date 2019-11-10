@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/imgCar"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:padding="25dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvAppNameDialogAbout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|center_horizontal"
+        android:layout_marginStart="28dp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/righteous"
+        android:padding="4dp"
+        android:text="@string/txt_marca_vehiculo"
+        android:textColor="@color/colorBlack"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/imgCar"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvTrademarkCar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start|center_horizontal"
+        android:layout_marginStart="28dp"
+        android:layout_marginLeft="28dp"
+        android:padding="4dp"
+        android:text="@string/txt_not_fund"
+        android:textColor="@color/colorBlack"
+        app:layout_constraintStart_toEndOf="@+id/imgCar"
+        app:layout_constraintTop_toBottomOf="@+id/tvAppNameDialogAbout"/>
+
+    <Button
+        android:id="@+id/btnShowInfoCarModel"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="132dp"
+        android:layout_marginLeft="132dp"
+        android:layout_marginTop="33dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginBottom="33dp"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:background="@drawable/ic_arrow_forward_black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.908"
+        app:layout_constraintStart_toEndOf="@+id/tvTrademarkCar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
