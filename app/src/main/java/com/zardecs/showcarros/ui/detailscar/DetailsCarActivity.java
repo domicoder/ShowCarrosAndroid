@@ -1,13 +1,13 @@
 package com.zardecs.showcarros.ui.detailscar;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.zardecs.showcarros.R;
 import com.zardecs.showcarros.utils.Constants;

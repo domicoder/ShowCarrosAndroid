@@ -1,8 +1,5 @@
 package com.zardecs.showcarros.ui.home;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,51 +10,85 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.zardecs.showcarros.R;
 import com.zardecs.showcarros.data.adapter.CustomGridViewAdapter;
+import com.zardecs.showcarros.data.repository.HomeRepository;
+import com.zardecs.showcarros.model.trademarkautomobiles.TrademarkAutomobilesResponse;
 import com.zardecs.showcarros.ui.listcars.ListCarActivity;
 import com.zardecs.showcarros.utils.Constants;
 
-public class HomeActivity extends AppCompatActivity {
-
-    private final int trademarkImages[] = {R.drawable.marca1, R.drawable.marca2, R.drawable.marca3, R.drawable.marca4,
-            R.drawable.marca5, R.drawable.marca6,R.drawable.marca7,R.drawable.marca8};
-
-    private final String trademarkCars[] = {"Volkswagen", "Toyota", "Nissan",
-            "Mercedes-Benz", "Honda",
-            "BMW", "Audi", "Acura"};
-
-    // Volkswagen cars
-    private final int imagesResourcesVolkswagenCars[] = {R.drawable.car1, R.drawable.car2, R.drawable.car3, R.drawable.car4};
-
-    // Toyota cars
-    private final int imagesResourcesToyotaCars[] = {R.drawable.car5, R.drawable.car6, R.drawable.car7, R.drawable.car8};
-
-    // Nissan cars
-    private final int imagesResourcesNissanCars[] = {R.drawable.car9, R.drawable.car10, R.drawable.car11, R.drawable.car12};
-
-    // Mercedes-Benz cars
-    private final int imagesResourcesMercedesBenzCars[] = {R.drawable.car13, R.drawable.car14, R.drawable.car15, R.drawable.car16};
-
-    // Honda cars
-    private final int imagesResourcesHondaCars[] = {R.drawable.car17, R.drawable.car18, R.drawable.car19, R.drawable.car20};
-
-    // BMW cars
-    private final int imagesResourcesBMWCars[] = {R.drawable.car21, R.drawable.car22, R.drawable.car23, R.drawable.car24};
-
-    // Audi cars
-    private final int imagesResourcesAudiCars[] = {R.drawable.car25, R.drawable.car26, R.drawable.car27, R.drawable.car28};
-
-    // Acura cars
-    private final int imagesResourcesAcuraCars[] = {R.drawable.car29, R.drawable.car30, R.drawable.car31, R.drawable.car32};
+public class HomeActivity extends AppCompatActivity implements IHomeContract.IHomeView {
 
     private GridView mGridView;
+
+    private int[] trademarkImages;
+    private String[] trademarkCars;
+    private int[] imagesResourcesVolkswagenCars;
+    private int[] imagesResourcesToyotaCars;
+    private int[] imagesResourcesNissanCars;
+    private int[] imagesResourcesMercedesBenzCars;
+    private int[] imagesResourcesHondaCars;
+    private int[] imagesResourcesBMWCars;
+    private int[] imagesResourcesAudiCars;
+    private int[] imagesResourcesAcuraCars;
+
+    HomeRepository homeRepository = new HomeRepository();
+    IHomeContract.IHomePresenter iHomePresenter = new HomePresenter(homeRepository);
+
+    TrademarkAutomobilesResponse trademarkAutomobilesResponse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_home);
         mGridView = findViewById(R.id.gridViewImages);
+
+        iHomePresenter.bind(this);
+
+        iHomePresenter.getTrademarkImages();
+        iHomePresenter.getTrademarkCars();
+        iHomePresenter.getImagesResourcesVolkswagenCars();
+        iHomePresenter.getImagesResourcesToyotaCars();
+        iHomePresenter.getImagesResourcesNissanCars();
+        iHomePresenter.getImagesResourcesMercedesBenzCars();
+        iHomePresenter.getImagesResourcesHondaCars();
+        iHomePresenter.getImagesResourcesBMWCars();
+        iHomePresenter.getImagesResourcesAudiCars();
+        iHomePresenter.getImagesResourcesAcuraCars();
+
+        // Using Retrofit
+        /*Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Constants.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        MyJsonApiService myJsonApiService = retrofit.create(MyJsonApiService.class);
+
+        Call<TrademarkAutomobilesResponse> call = myJsonApiService.getTrademarkAutomobilesResponse();
+        call.enqueue(new Callback<TrademarkAutomobilesResponse>() {
+            @Override
+            public void onResponse(Call<TrademarkAutomobilesResponse> call, Response<TrademarkAutomobilesResponse> response) {
+
+                *//*if (response.isSuccessful()){
+                    trademarkAutomobilesResponse = response.body();
+
+                    assert trademarkAutomobilesResponse != null;
+                    List<TrademarkAutomobilesItem> trademarkAutomobilesItemList = trademarkAutomobilesResponse.getData().getTrademarkAutomobiles();
+                    for (TrademarkAutomobilesItem trademarkAutomobilesItem: trademarkAutomobilesItemList){
+                        Toast.makeText(HomeActivity.this, "Marca :"+trademarkAutomobilesItem.getName(), Toast.LENGTH_SHORT).show();
+                    }
+
+                }*//*
+            }
+
+            @Override
+            public void onFailure(Call<TrademarkAutomobilesResponse> call, Throwable t) {
+//                Toast.makeText(HomeActivity.this, "Ocurrio un problema.", Toast.LENGTH_SHORT).show();
+            }
+        });*/
 
         CustomGridViewAdapter customGridViewAdapter = new CustomGridViewAdapter(getApplicationContext(), trademarkImages, trademarkCars);
 
@@ -70,6 +101,7 @@ public class HomeActivity extends AppCompatActivity {
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                 switch (trademarkImages[position]){
                     case R.drawable.marca1:
                         Intent intentSendVolkswagenCars = new Intent(HomeActivity.this, ListCarActivity.class);
@@ -143,6 +175,16 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
+    private void setTrademarkAutomobilesResponse(TrademarkAutomobilesResponse trademarkAutomobilesResponse){
+        this.trademarkAutomobilesResponse = trademarkAutomobilesResponse;
+    }
+
+    @Override
+    protected void onDestroy() {
+        iHomePresenter.unbind();
+        super.onDestroy();
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -160,5 +202,55 @@ public class HomeActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void showTrademarkImages(int[] trademarkImages) {
+        this.trademarkImages = trademarkImages;
+    }
+
+    @Override
+    public void showTrademarkCars(String[] trademarkCars) {
+        this.trademarkCars = trademarkCars;
+    }
+
+    @Override
+    public void showImagesResourcesVolkswagenCars(int[] imagesResourcesVolkswagenCars) {
+        this.imagesResourcesVolkswagenCars = imagesResourcesVolkswagenCars;
+    }
+
+    @Override
+    public void showImagesResourcesToyotaCars(int[] imagesResourcesToyotaCars) {
+        this.imagesResourcesToyotaCars = imagesResourcesToyotaCars;
+    }
+
+    @Override
+    public void showImagesResourcesNissanCars(int[] imagesResourcesNissanCars) {
+        this.imagesResourcesNissanCars = imagesResourcesNissanCars;
+    }
+
+    @Override
+    public void showImagesResourcesMercedesBenzCars(int[] imagesResourcesMercedesBenzCars) {
+        this.imagesResourcesMercedesBenzCars = imagesResourcesMercedesBenzCars;
+    }
+
+    @Override
+    public void showImagesResourcesHondaCars(int[] imagesResourcesHondaCars) {
+        this.imagesResourcesHondaCars = imagesResourcesHondaCars;
+    }
+
+    @Override
+    public void showImagesResourcesBMWCars(int[] imagesResourcesBMWCars) {
+        this.imagesResourcesBMWCars = imagesResourcesBMWCars;
+    }
+
+    @Override
+    public void showImagesResourcesAudiCars(int[] imagesResourcesAudiCars) {
+        this.imagesResourcesAudiCars = imagesResourcesAudiCars;
+    }
+
+    @Override
+    public void showImagesResourcesAcuraCars(int[] imagesResourcesAcuraCars) {
+        this.imagesResourcesAcuraCars = imagesResourcesAcuraCars;
     }
 }

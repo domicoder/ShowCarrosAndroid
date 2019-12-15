@@ -11,4 +11,8 @@ public class Constants {
     // ListCarActivity
     public static final String TITLE_ACTIONBAR_BY_TRADEMARK = "title_actionbar_by_trademark";
     public static final String URL_INFO_MODEL_CAR_TO_WEBVIEW = "url_info_model_car_to_webview";
+
+    // Retrofit API
+    // public static final String BASE_URL = "https://pastebin.com/";
+    public static final String BASE_URL = "https://api.myjson.com/";
 }
